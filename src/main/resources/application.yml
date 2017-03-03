@@ -14,7 +14,7 @@ spring:
                 hbm2ddl:
                     import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
     datasource:
-        url: mysql://eu-cdbr-west-01.cleardb.com/heroku_9ea335e57c0ed08?reconnect=true&useUnicode=yes&characterEncoding=UTF-8&useSSL=false
+        url: jdbc:mysql://eu-cdbr-west-01.cleardb.com/heroku_9ea335e57c0ed08?reconnect=true&useUnicode=yes&characterEncoding=UTF-8&useSSL=false
         username: b62a6609afa871
         password: fe4bd9fb
 #        url: jdbc:mysql://192.168.56.101/lawdebate?reconnect=true&useUnicode=yes&characterEncoding=UTF-8&useSSL=false
