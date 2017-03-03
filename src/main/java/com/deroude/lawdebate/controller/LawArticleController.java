@@ -69,6 +69,12 @@ public class LawArticleController {
 	return commentRepository.findByResponseId(responseId, pgreq);
     }
 
+    @PostMapping(consumes = "application/json")
+    public ResponseEntity addArticle(@RequestBody LawArticle article) {
+	lawArticleRepository.save(article);
+	return ResponseEntity.ok().build();
+    }
+
     @PostMapping(value = "/{articleId}", consumes = "application/json")
     public ResponseEntity addResponse(@PathVariable("articleId") Long articleId, @RequestBody Response response) {
 	LawArticle re = lawArticleRepository.findOne(articleId);
