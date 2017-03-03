@@ -1,0 +1,30 @@
+## YAML Template.
+server:
+    port: 7799
+spring:
+    jpa:
+        database: MYSQL
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        hibernate:
+            ddl-auto: create-drop
+        properties:
+            hibernate:
+                connection:
+                    charSet: UTF-8
+                hbm2ddl:
+                    import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
+    datasource:
+#        url: jdbc:mysql://eu-cdbr-west-01.cleardb.com/heroku_4edd6cdb943118c?reconnect=true&useUnicode=yes&characterEncoding=UTF-8&useSSL=false
+#        username: b56ac245510bfd
+#        password: 537fbbde
+        url: jdbc:mysql://192.168.56.101/lawdebate?reconnect=true&useUnicode=yes&characterEncoding=UTF-8&useSSL=false
+        username: law
+        password: debate
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 5
+    social:
+        facebook:
+            appId: 233668646673605
+            appSecret: 33b17e044ee6a4fa383f46ec6e28ea1d
+
+
