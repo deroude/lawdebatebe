@@ -17,8 +17,11 @@ import com.deroude.lawdebate.repository.ResponseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -63,5 +66,17 @@ public class LawArticleController {
     @GetMapping(value = "/{articleId}/{responseId}/comments", produces = "application/json")
     public Page<Comment> getComments(@PathVariable("articleId") Long articleId, @PathVariable("responseId") Long responseId, @PageableDefault(page = 0, size = 20) Pageable pgreq) {
 	return commentRepository.findByResponseId(responseId, pgreq);
+    }
+
+    @PostMapping(value = "/{articleId}/{responseId}", consumes = "application/json")
+    public ResponseEntity addComment(@PathVariable("articleId") Long articleId, @PathVariable("responseId") Long responseId, @RequestBody Comment comment) {
+	Response re = responseRepository.findOne(responseId);
+	if (re == null) {
+	    return ResponseEntity.notFound().build();
+	} else {
+	    comment.setResponse(re);
+	    commentRepository.save(comment);
+	    return ResponseEntity.ok().build();
+	}
     }
 }
