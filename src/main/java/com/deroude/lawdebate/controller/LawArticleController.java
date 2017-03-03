@@ -8,6 +8,7 @@ package com.deroude.lawdebate.controller;
 
 import com.deroude.lawdebate.domain.ArticleVersion;
 import com.deroude.lawdebate.domain.Comment;
+import com.deroude.lawdebate.domain.LawArticle;
 import com.deroude.lawdebate.domain.Response;
 import com.deroude.lawdebate.dto.LawArticleSummary;
 import com.deroude.lawdebate.repository.ArticleVersionRepository;
@@ -66,6 +67,18 @@ public class LawArticleController {
     @GetMapping(value = "/{articleId}/{responseId}/comments", produces = "application/json")
     public Page<Comment> getComments(@PathVariable("articleId") Long articleId, @PathVariable("responseId") Long responseId, @PageableDefault(page = 0, size = 20) Pageable pgreq) {
 	return commentRepository.findByResponseId(responseId, pgreq);
+    }
+
+    @PostMapping(value = "/{articleId}", consumes = "application/json")
+    public ResponseEntity addResponse(@PathVariable("articleId") Long articleId, @RequestBody Response response) {
+	LawArticle re = lawArticleRepository.findOne(articleId);
+	if (re == null) {
+	    return ResponseEntity.notFound().build();
+	} else {
+	    response.setArticle(re);
+	    responseRepository.save(response);
+	    return ResponseEntity.ok().build();
+	}
     }
 
     @PostMapping(value = "/{articleId}/{responseId}", consumes = "application/json")
