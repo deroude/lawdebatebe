@@ -35,6 +35,6 @@ public interface LawArticleRepository extends JpaRepository<LawArticle, Long> {
 	    + "left join l.responses yr on yr.position = 'YAY' left join yr.votes y "
 	    + "left join l.responses nr on nr.position='NAY' left join nr.votes n "
 	    + "left join l.responses ar on ar.position='ABSTAIN' left join ar.votes a "
-	    + "where l.id={id} group by l.id")
+	    + "where l.id=:id group by l.id")
     public LawArticleSummary getArticle(@Param("id") Long id);
 }
