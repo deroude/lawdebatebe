@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -28,4 +29,12 @@ public interface LawArticleRepository extends JpaRepository<LawArticle, Long> {
 	    + "left join l.responses ar on ar.position='ABSTAIN' left join ar.votes a "
 	    + " group by l.id")
     public Page<LawArticleSummary> getArticles(Pageable preq);
+
+    @Query("select new com.deroude.lawdebate.dto.LawArticleSummary (l,v,count(y),count(n),count(a)) from ArticleVersion v "
+	    + "join v.article l on v.last=1 "
+	    + "left join l.responses yr on yr.position = 'YAY' left join yr.votes y "
+	    + "left join l.responses nr on nr.position='NAY' left join nr.votes n "
+	    + "left join l.responses ar on ar.position='ABSTAIN' left join ar.votes a "
+	    + "where l.id={id} group by l.id")
+    public LawArticleSummary getArticle(@Param("id") Long id);
 }

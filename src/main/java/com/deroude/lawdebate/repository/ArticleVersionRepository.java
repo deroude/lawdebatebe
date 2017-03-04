@@ -21,4 +21,6 @@ public interface ArticleVersionRepository extends JpaRepository<ArticleVersion, 
 
     public Page<ArticleVersion> findByArticleId(Long articleId, Pageable preq);
 
+    public ArticleVersion findTopByArticleIdOrderByPublishDateDesc(Long articleId);
+
 }

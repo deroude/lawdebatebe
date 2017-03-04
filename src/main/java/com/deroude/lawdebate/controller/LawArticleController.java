@@ -54,6 +54,15 @@ public class LawArticleController {
 	return lawArticleRepository.getArticles(pgreq);
     }
 
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public ResponseEntity<LawArticleSummary> getArticle(@PathVariable("id") Long id) {
+	LawArticleSummary re = lawArticleRepository.getArticle(id);
+	if (re == null) {
+	    return ResponseEntity.notFound().build();
+	}
+	return ResponseEntity.ok(re);
+    }
+
     @GetMapping(value = "/{id}/versions", produces = "application/json")
     public Page<ArticleVersion> getVersions(@PathVariable("id") Long id, @PageableDefault(page = 0, size = 20) Pageable pgreq) {
 	return articleVersionRepository.findByArticleId(id, pgreq);

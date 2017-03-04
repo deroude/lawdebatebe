@@ -7,6 +7,7 @@
 package com.deroude.lawdebate.repository;
 
 import com.deroude.lawdebate.domain.Response;
+import com.deroude.lawdebate.domain.Response.Position;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,5 +21,7 @@ import org.springframework.stereotype.Repository;
 public interface ResponseRepository extends JpaRepository<Response, Long> {
 
     public Page<Response> findByArticleId(Long articleId, Pageable preq);
+
+    public Long countByArticleIdAndPosition(Long articleId, Position position);
 
 }
