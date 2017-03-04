@@ -27,7 +27,7 @@ public interface LawArticleRepository extends JpaRepository<LawArticle, Long> {
 	    + "left join l.responses yr on yr.position = 'YAY' left join yr.votes y "
 	    + "left join l.responses nr on nr.position='NAY' left join nr.votes n "
 	    + "left join l.responses ar on ar.position='ABSTAIN' left join ar.votes a "
-	    + "where (:search is null or l.agancy like :search or v.title like :search) group by l.id")
+	    + "where (:search is null or l.agency like :search or v.title like :search) group by l.id")
     public Page<LawArticleSummary> getArticles(@Param("search") String search, Pageable preq);
 
     @Query("select new com.deroude.lawdebate.dto.LawArticleSummary (l,v,count(y),count(n),count(a)) from ArticleVersion v "
