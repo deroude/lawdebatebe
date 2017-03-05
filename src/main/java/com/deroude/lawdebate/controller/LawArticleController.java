@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -50,8 +51,9 @@ public class LawArticleController {
     }
 
     @GetMapping(produces = "application/json")
-    public Page<LawArticleSummary> getArticles(@PageableDefault(page = 0, size = 20) Pageable pgreq) {
-	return lawArticleRepository.getArticles(pgreq);
+    public Page<LawArticleSummary> getArticles(@RequestParam(value = "search", defaultValue = "", required = false) String search,
+	    @PageableDefault(page = 0, size = 20) Pageable pgreq) {
+	return lawArticleRepository.getArticles(search, pgreq);
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
